@@ -6,7 +6,7 @@ from PyPDF2 import PdfReader
 import time
 
 # Konfiguration
-API_KEY = "sk-proj-XEEGpki4ogRIRwB1dgIRT3BlbkFJydH5gsW9D9yvFPQxZqS8"
+API_KEY = "YOUR OPENAI API KEY"
 INPUT_FOLDER = '../Verfügbare_PDFs'
 OUTPUT_FOLDER = '../Konvertierbare_Texte'
 OUTPUT_CSV = './GPToutput.csv'
