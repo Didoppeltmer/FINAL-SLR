@@ -1,0 +1,578 @@
+A Concept for Spreadsheet-Based Process
+Modeling
+Stefan Krumnow1and Gero Decker2
+1Hasso-Plattner Institute at the University of Potsdam,
+Prof.-Dr.-Helmert-Str. 2-3, 14482 Potsdam, Germany
+stefan.krumnow@student.hpi.uni-potsdam.de
+2Signavio GmbH,
+Goethestr. 2-3, 10623 Berlin, Germany
+gero.decker@signavio.com
+Abstract. When it comes to the understanding and usage of business
+process models, there exists a gap between process modeling method ex-perts and domain experts. This paper proposes an approach to close this
+gap by using simple spreadsheet-based representations of process mod-
+els. For this, diﬀerent approaches for the modeling of business processesin spreadsheets are introduced and evaluated. Transformations from and
+into BPMN 2.0 are investigated and on basis of these results, a round-
+tripping concept for process models is developed. Finally, a prototype isintroduced that proves the applicability of this concept.
+Keywords: Process modeling, Spreadsheets, Excel, Transformation,
+BPMN, Round-Tripping, Version Management.
+1 Introduction
+Graphical process model notations such as the BPMN provide established and
+successful ways for the speciﬁcation or documentation of intended or existingprocesses. They oﬀer accepted syntaxe s and at least semi-semantics. Thus, a
+graphical model supports the communication between those people who un-
+derstand its notation (method experts) and can be used in analysis- or imple-mentation-projects.
+However, these notations tend to be rather unintuitive for people who do
+not know them. Even worse, software tools that can be used for the creationand maintenance of such graphical model s are complex and require special user
+skills in most cases. Therefore, the majority of people in a company will not be
+able or allowed to participate in the work with process models. Hence, thorough
+interviews of a persons who completely know and understand a certain process
+are required as it could not inﬂuence the process model otherwise.
+In order to close the gap between BPM method experts and domain experts,
+other representations of a process model can be helpful. A process could be mod-
+eled in a simpler notation using a tool that is easy to use. One approach to realizethis idea is the usage of spreadsheets. Spr eadsheets oﬀer a simple and (especially
+J. Mendling, M. Weidlich, and M. Weske (Eds.): BPMN 2010, LNBIP 67, pp. 63–77, 2010.
+c/circlecopyrtSpringer-Verlag Berlin Heidelberg 201064 S. Krumnow and G. Decker
+in business) well-known way to organize data in rows and columns. Moreover,
+they can be edited by wide-spread tools like Microsoft Excel or OpenOﬃce Calc,
+which is even free of charge. So a spreads heet-based process model could be easy
+to understand and handle for most people who use computers for work.
+This paper investigates how a process can be represented synchronously in a
+spreadsheet-based model as well as in a gr aphical model. For this purpose, ﬁrst it
+has to be identiﬁed how processes can be modeled in spreadsheets in a way that is
+as simple but also as expressive as possible. Then, transformations between graph-
+ical notation and spreadsheets have to be deﬁned. In order to really close the gap
+between process and domain experts, the transformation algorithms will then be
+used in a synchronization mechanism that allows for a model to roundtrip between
+both worlds.Hereby, the main idea is to exportgraphicalmodels into easierspread-
+sheets that can be modiﬁed by domain experts and be imported back into the pro-
+cess modeling tool. All results developed in this paper are applied in a prototype
+that ﬁnally shows how the round-tripping can work in praxis.
+2 Existing Tools and Related Work
+There exist already some process-mode ling tools that use spreadsheet-based
+modeling approaches.
+First of all, Symbio Process1should be mentioned. This tool, developed by
+a small German company, uses Microsof t Excel enhanced with VBA macros in
+order to model processes completely i n a spreadsheet. The modeler can add
+activities or events by adding rows to the spreadsheet. Columns are used to rep-
+resent properties of the elements represented by rows. The ﬁrst two properties of
+each element are its name and type. Then, there are properties for assignments,
+organizations, input, outputs, involved systems and form templates. Moreover,
+Symbio Process allows the modeler to integrate control ﬂow structures into the
+spreadsheet. Each element has a predece ssor property. Besides activities and
+events there are also connectors and pro cess interfaces available in order to sup-
+port links between diﬀerent models and branching and joining behavior within
+one model. Symbio Process oﬀers a transformation into graphical process models
+(e.g. into BPMN and EPCs) that are exported as images.
+Another interesting tool is ARIS Express2, a freeware version of ARIS. ARIS
+Express is a graphical modeling tool for processes and organizations that oﬀers
+(amongst others) the notation of EPCs. Within the modeling canvas, the modeler
+can open a spreadsheet editor called SmartDesign. This editor oﬀers, similar to
+Symbio Process, a view on the current pro cess fragment, whereby activities and
+events are represented by rows and their properties by columns. Changes on pro-
+cessdatawithintheSmartDesigneditor(e.g.therenamingofactivityortheadding
+of a new input document) are directly taken over to the graphical process model.
+Unlike Symbio Process, ARIS Express does not support any control ﬂow struc-
+tures in its SmartDesign editor: Only sequences of activities and events can be
+1http://www.p-und-z.de/portal/produkte/symbio-process
+2http://www.ariscommunity.com/aris-expressA Concept for Spreadsheet-Based Process Modeling 65
+displayed and edited. In cases of EPCs that include branching and joining this
+causes the SmartDesign editor to only show a process fragment around a selected
+element.
+Although it does not perfectly ﬁt into th e ﬁeld of spreadsheet-based solutions,
+also Lombardi Blueprint3should be mentioned here. Lombardi Blueprint oﬀers
+web-based process modeling in diﬀeren t modeling perspectives such as a graph-
+ical canvas or a more simple grouping perspective. Here, activities are grouped
+into milestones and carry properties. The user interface of Lombardi Blueprint
+does not use spreadsheets but drag and drop containers and dialogs. However,
+the application oﬀers a very simple Excel export, which lists all activities in
+separate rows and names thei r associated milestones.
+Although there exist several commercial process-modeling tools that use
+spreadsheet-based modeling approaches, the topic is mostly ignored in the BPM
+research community: [6] and [7] show that spreadsheets are often used in process
+analysis, controlling and simulation. In [2], the authors even propose a trans-
+formation of process models into spreads heets for the purpose of simulation.
+However, business process modeling taxonomies such as [4] do not cover spread-
+sheets as a way of modeling processes.
+Model transformations and the synchronization of models are more general
+topics, e.g. addressed in the ﬁeld of model-driven engineering [5].
+3 Catalog of Approaches
+As the last section has shown, the exist ing tools share one common character-
+istic: Rows in a spreadsheet are used to r epresent elements of interest (such as
+activities or events) while columns are used to represent property types. But
+there are many diﬀerences between the t ools as well. These diﬀerences can be
+categorized by regarding the whole problem of what to express in a spreadsheet
+in diﬀerent dimensions:
+First of all, there is the dimension regarding the question of which elements
+to support. In ARIS Express, activities , events and process interfaces (links or
+subprocesses) can be represented by a row. In Symbio Process, also branching
+and joining connectors are supported a s elements of interest. Compared with
+graphical notations, both approaches share a limitation: Elements such as data
+objects or organizations can only be speciﬁed as property values but not as own
+elements with own properties. Therefore, e.g. an input document of an activity
+can only be described by a string and not further deﬁned, e.g. by an xml schema.
+In a second dimension, the question of how properties are represented is in-
+vestigated. In Symbio Process, there are a number of predeﬁned properties that
+can (for each element) store one string value. In ARIS Express, it is also possible
+to have multiple assignments for one property (e.g. two input documents for one
+activity). Again, there is a shared limitation as only a predeﬁned set of properties
+exists in both solutions. In an enhancemen t, the deﬁnition of customized proper-
+ties in the spreadsheet it self could be possible.
+3https://blueprint.lombardi.com/index.html66 S. Krumnow and G. Decker
+The third dimension covers the question of which relations between elements
+can exist. ARIS Express only supports a very simple relation of elements: thesequence deﬁned by the order of rows. Symbio Process on the other hand allows
+for the modeling of control ﬂow relatio ns between certain elements. If a tool
+allowed the modeling of data or organizational elements as own rows, it wouldalso have to oﬀer a possibility to model association e.g. between activities and
+data objects.
+In the following subsection, we will develop a catalog of diﬀerently expressive
+approaches to model processes using spreadsheets based on categorization pre-
+sented above. We will start with the most easy but also less expressive approachand will then increase diﬃculty and expressiveness.
+3.1 The “Simple Sequence” Approach
+As the existing tools presented in sectio n 2 still aim for business process method
+experts as users, this ﬁrst approach tries to be as simple as possible: Only the
+modeling of sequences of activities is supported. Activities have a number of
+property types that can be assigned once or several times per activity. These
+multiple assignments of properties are necessary, e.g. for activities that have twoinput data objects.
+Figure 1 shows how this approach can be modeled using an UML class dia-
+gram. The Activity class inherits its behavior from a class Row that encapsulatesall the characteristics an Excel row has, including its row number and the order-
+ing within a spreadsheet. Besides a name and a description, activities can deﬁne
+input and output data as well as performers and their organizations.
+A diﬃculty of this approach exist in the realization of multiple properties in a
+spreadsheet. If an customi zed spreadsheet editor is us ed (as in ARIS Express), the
+cells can be enabled to contain lists of valu es. If Excel is used, the problem is much
+harder. Here, comma-separat ed strings could be used. Alt ernatively, a line-break-
+separated string could be used, which leads to a list layout for a multiple property.
+3.2 The “Branching” Approach
+As most process models contain not only sequences but complex control ﬂow
+structures, the second approach adds some new elements and, more importantly
+a successor property to each element. In order to support branching and joining
+Activity
+name : String
+description : String
+input : String [0..*]
+output : String [0..*]
+assignee : String
+organization : String
+Row
+rowNr : Intege rordernextRow
+previousRow
+Fig. 1. The ”Simple Sequence” approach modeled as UML class diagramA Concept for Spreadsheet-Based Process Modeling 67
+Event
+SubProces s
+ref : String
+FlowElement
+name : String
+description : String
+BranchingElement
+successor : Integer [0..*]
+SimpleFlowElement
+successor : Integer
+AndGateway
+OrGateway
+XorGateway
+Activity
+input : String [0..*]
+output : String [0..*]
+assignee : String
+organization : String
+Row
+rowNr : Intege r
+controlFlowsuccessor
+controlFlowsuccessorordernextRow
+previousRow
+Fig. 2. Elements of the ”Branching” approach modeled as UML class diagram
+within one model, gateways and events are neccessary. As in BPMN, the basic
+three gateway types (Parallel, Exclusive and Inclusive) have diﬀerent execution
+semantics. Events can be used to express reached states in a process model.
+More important in our case, they can be used to model diﬀerent conditions
+after branching gateways. Finally, subprocesses are activities, that have an ownprocess model describing their internal behaviour.
+Figure 2 shows the extended UML class diagram that models the structural
+characteristics of the second approach. The abstract class FlowElement nowholds name and description of an element, while BranchingElement and Sim-
+pleFlowElement areintroduced to cove r the successor property. For branching
+elements, more than one successor can ex ist. Several successors can, e.g. , be
+realized by using a comma-separated st ring of row numbers as property value.
+If no successor is speciﬁed, implicitly th e next row’s element is interpreted as
+successor. If that row is empty, the curre nt element has to be an end-element.
+One problem that occurs now is the iden tiﬁcation of the element type a certain
+row represents. This could be corrected by introducing a new property to eachrow that holds the type of the represented activity. As this requires the user
+to understand the diﬀerences between the types, a smoother approach can be
+taken: Depending on the given name, the position within the process’ ﬂow and
+used properties, the type of an element can be deducted (by humans as well as
+Fig. 3. Cutout of an example spreadsheet-based process model68 S. Krumnow and G. Decker
+computers). Here, only an example in ﬁgure 3 should illustrate this. In sections
+4 and 5, the idea is explained in more detail.
+The example shows a short sequence of activities that are needed to handle
+an order, e.g. in an online shop. First, the goods have to be packed. Then, if
+the volume of order is high enough, some vouchers will be added to the packageand ﬁnally the package is shipped. In order to make ”Add vouchers” optional, a
+splitting exclusive gateway that can be i dentiﬁed by the beginning of its name
+(”XOR”) is placed in the model.
+3.3 The “More Properties” Approach
+Although the second approach already supports a wide range of features a pro-
+cess model might have, there is still one gap to close: The modeler has no sup-
+port to specify properties, e.g. of an input document or an assigned role. As
+mentioned before, this is due to the fact that all those elements are just repre-
+sented by simple strings. In order to ﬁx this problem, elements like data objects
+or organizations could be represented by own rows that are linked to activitiessimilar to the control ﬂow that links two control ﬂow elements.
+Moreover, the modeler is limited in the number and types of properties a
+element might have. This can be corrected by giving him the oppurtunity todeﬁne own customized property types by adding new columns to his spreadsheet.
+In ﬁgure 4, the extended UML class diagram that also covers the third approach
+is shown.
+But there is also a downside of this approach. Although we gain more ex-
+pressiveness when it comes to the behavi or and structure of attached elements,
+the spreadsheets are getting more comple x: There are a lot of associating links
+connecting an activity row to attached element rows, even if for the attached
+element only the name is modeled.
+Event
+SubProcess
+ref : String
+FlowElement
+BranchingElement
+successor : Integer [0..*]
+SimpleFlowElement
+successor : Integer
+AndGateway
+OrGateway
+XorGateway
+Activity
+Row
+rowNr : Integer
+Element
+name : String
+description : String
+customProperties : Map
+DataObject
+schema : String
+Organization
+name : String
+address : String
+Role
+assignmentExpr : String
+controlFlowsuccessor
+controlFlowsuccessorordernextRow
+previousRow
+input/outputassignee
+organization
+Fig. 4. Elements of the ”More Properties” approach modeled as UML class diagramA Concept for Spreadsheet-Based Process Modeling 69
+This section showed three approaches that allow the easy modeling of pro-
+cesses in spreadsheets. In order to rank the approaches, two aspects have to beregarded: Firstly, the approach should be as easy to use as possible. The rank-
+ing of this aspect alone is simple, as the diﬃculties to use a certain approach
+are increasing from I to III. Secondly, the approach should be applicable for asmany processes as possible. The next sect ion investigates how spreadsheets of
+the diﬀerent approaches can be transformed from and into existing graphical
+notations. This leads to an empirical research that examines what percentage
+of an huge model repository is covered by each approach, which might help to
+build up a ranking of approaches.
+4 Transformations
+The question of transformations between graphical models and spreadsheet mod-els has several motivations: As already explained in the last section, it helps torank diﬀerent approaches by their expressiveness. But far more important is the
+fact that spreadsheet -based process models cannot exist in an isolated environ-
+ment: Graphical notations such as the BPMN have proven to be successful for
+those that work with process models in their everyday’s work. So, in order to
+beneﬁt from the established techniques for graphical models as well as from theeasiness of spreadsheets, both worlds ha ve to be transformable into each other.
+Therefore, this section will show how s preadsheet-based model can be trans-
+formed from and into BPMN. We will start by introducing the general transfor-mation algorithm (that could also be used for other notations like EPCs) before
+we show which elements of the BPMN are transformable.
+4.1 General Algorithms
+In order to transform a graphical model into a spreadsheet, we need a transfor-
+mation T. The following code snippet shows how Tcan be implemented:
+nodeArray = getNodesInSequentialOrder(model) for each node in
+nodeArray:
+if isSupportedElement(node):
+createRow(node)
+for each node in nodeArray:
+if isSupportedElement(node):
+for each connectedNode of node:
+if isSupportedRelation(node, connectedNode):
+addRelation(node, connectedNode)
+For a natural ordering of elements within the produced spreadsheet, ﬁrstly the
+nodes have to be sequentialized. Thereby , pairs of two nodes that are connected
+by control ﬂow, whereby the source has only one outgoing ﬂow and the target
+has only one incoming ﬂow are placed next to each other in an list. By iterat-ing over this list, the spreadsheet can b e created. Here, four functions have be70 S. Krumnow and G. Decker
+implemented. The ﬁrst two functions che ck whether an element or an elements’
+relation is valid. The third creates rows, while the fouth adds connections be-tween rows (or data values to rows).
+There are two loops used in order to show that for the creation of a link
+between a node and its connected node, this connected node needs to be repre-sented by an existing row. The second lo op could, of course, be merged into the
+ﬁrst one in order to gain performance, but this would lead to a more complex
+code snippet. However, as the sequentializer as well as the two loops have a lin-
+ear time consumption, the whole transformation lies in O(n). Please also note
+that connected nodes might also be nodes that have a vertical (containment-)relation with the currently regarded node.
+In order to transform a valid spreadsheet into a graphical notation, a trans-
+formation T
+−1is needed. Here, a simila r algorithm can be used:
+for each row of spreadsheet:
+if isSupportedRow(node):
+createElement(row)
+for each row of spreadsheet:
+if isSupportedRow(node):
+for each property of row:
+// this includes the implicite order of rowsif isLink(property) && isSupported(node, property):
+addRelation(row, property)
+Of course, this transformation requires a layouting algorithm for the generated
+graph. As this is a complex problem itself, this paper assumes the existence of
+such an algorithm that can be applied for the resulting model. Like T,a l s o T
+−1
+can be performed in linear time.
+4.2 BPMN Transformation
+After looking at the general transformation algorithms, we can now inspect which
+parts of the BPMN 2.0 [1] can be transfo rmed into spreadsheets and vice-versa.
+Table 1 shows which elements and relatio ns can be transformed into the diﬀerent
+spreadsheet approaches and backwards using uni- or bi-directional arcs .
+As the table shows, all elements of the three approaches can be transformed
+into BPMN elements. Thereby, every row of a spreadsheet is interpreted as an
+activity except if one of the f ollowing criterias is met:
+–In II and III: If the name starts with AND, XOR or OR, the element is a
+gateway.
+–In II and III: If the element has no predecessor/successor, it is a start
+event/end event.
+–In II and III: If the ref property is set, the element is a collapsed subprocess.
+–In III: If the element is connected thro ugh a typed relation (e.g. input), the
+element’s type can be deducted from the relation.A Concept for Spreadsheet-Based Process Modeling 71
+Table 1. Transformability of BPMN elements and relation
+Approach I Approach II Approach III
+Task
+All Events, Collapsed Subprocess
+Parallel-, Databased & Eventbased
+Exclusive-, Inclusive-Gateway
+Collapsed Subprocess
+Pool, Lane
+5+
+5+
+Data Object
+ +
+6
+Subprocess, Collapsed pool, Complex
+Gateway, Group, Annotation
+Sequence ﬂow
+ +
+4
+Message ﬂow
+Associations (directed and undirected)
+with Data
++
+7
++
+7
+Containment in Pool and Lane
+8+
+Attachement of boundary events
+In the other direction, there exist a lot of BPMN elements that cannot be
+transformed into either one of the approaches, e.g. subprocesses and collapsed
+(black-box) pools but also the descriptive elements groups and annotations.
+As table 1 also shows, message ﬂows canno t be transformed into spreadsheets
+at all. Since message ﬂows are used to model the interaction of diﬀerent processes,
+they are a pretty complicat ed construct and can therefore not be pressed into
+a spreadsheet-based model that aims for simplity. Moreover, attached boundary
+events cannot be transformed and there ex ist restrictions for containment in
+pools and lanes as well as for associations.
+4.3 Statistical Analysis
+The identiﬁcation of BPMN elements an d relations that can be transformed
+into spreadsheets gives us the opportunity to investigate how expressive the
+three approaches really are. This can be done by investigating how many BPMN
+models of the huge Oryx repository [3] can be transformed into the diﬀerent
+approaches from section 3.
+4If maximal one outgoing and maximal one incoming ﬂow occurs per element.
+5Attribute Organization (=pool) has to be speciﬁed when Assignee (=lane) is used.
+6If data object is connected to a task and no properties are modeled.
+7Undirected and bidirectional relations will appear equal after transformation.
+8If maximal one Organization (=pool) and maximal one Assignee (=lane) is deﬁned.72 S. Krumnow and G. Decker
+Fig. 5. Results of the empirical analysis on transformanility of 1691 BPMN models
+The Oryx repository contains roughly 2500 BPMN process models. Before
+these can be used in an analysis, small test models and models with a big number
+of syntactical errors had to be ﬁltered as they could falsify the results. On the
+basis of a ﬁltered set of 1691 meaningful BPMN models, we conducted an analysis
+that investigates how many of the models can be transformed into either of the
+three presented approaches.
+For this purpose, every meaningful model has to run through a check al-
+gorithm that identiﬁes all the approaches this model can be transformed intowithout any loss of information according to table 1. Similar to the algorithm
+shown in section 4.1, the check algorit hm looks for each element and relation
+which approaches can cover it. Thereby, when regarding those element’s proper-
+ties, some diﬃculties occur due to the fac tt h a tO r y xs t o r e se l e m e n tp r o p e r t i e s
+not only if they are set by the user but also if there exist default values for them.Thus, it is not possible to detect all properties that the users really intended to
+set, which might slightly falsify the results presented in ﬁgure 5 regarding the
+usage of unsopported properties.
+As the diagram shows, only 36% of the models can be transformed without
+loss of information. This could of course be corrected by inventing approaches
+that are even more expressive than approach III. But on the other side, these
+approaches would then loose the advantage of being simple enough for domain
+experts and not only for process modeling experts. Therefore, from this an-alyzation, we can conclude that one-to-one mappings between graphical and
+spreadsheet-based modeling notations will not help closing the gap between those
+two groups. Rather, we need transforma tions that accept the loss of certain in-
+formation. Figure 5 shows that only by ignoring groups and annotations almost
+50% of the models become transformable. Interestingly, approaches II and III
+are almost equally expressiveness for this set of test data.
+The next section will now show how gra phical models and spreadsheet models
+can be synchronized even if the graphical m odel contains complex constructs that
+cannot be represented in an easy-to use spreadsheet model.A Concept for Spreadsheet-Based Process Modeling 73
+5 Round-Tripping
+In order to close the gap between domain and method experts, a model should be
+able to roundtrip between a graphical and a spreadsheet representation. There
+are two use cases for such a roundtrip:
+A certain process is modeled in a gra phical notation (e.g. BPMN) using a
+modeling tool (e.g. Oryx). The method expert likes to let a domain expert having
+a view on the model and maybe correctin g some faults. Therefore, he exports
+the process into a simple spreadsheet, s ends it to the domain expert who can
+simply edit it with Excel. Afterwards, th e domain expert sends the spreadsheet
+back to the method expert who can import the spreadsheet back into his system.
+In the second use case, the process in initially modeled in a spreadsheet and
+then send to a method expert who imports i t to his system. Afterwards, the same
+roundtrip as in the ﬁrst use case might of course take place. Section 4 already
+showed how spreadsheets can be transf ormed into graphical models, which is
+suﬃcient for the second use case.
+But for the ﬁrst use case, we cannot use these straight-forward transformation
+algorithms. This is due to the fact that graphical models are more expressive
+than easy-to-understand spreadsheets are: If we call the transformation from
+graphical into spreadsheet models Tand the vice-versa transformation T−1,w e
+observe the following problem: By applying the round-tripping transformationT
+−1(T(g)) on a graphical model g, the outcome of the transformation might
+diﬀer from its input, as Taccepts the loss of information.
+Moreover, the method expert would be forced to not edit the graphical model
+until he gets the edited spreadsheet ba ck. Otherwise he will end up having to
+manually merge diﬀerent versions into one model. The next section will show
+how both problems of the round-tripping use case can be solved by applying
+techniques from version control systems.
+5.1 Concept
+In ﬁgure 6, a concrete example for a model roundtrip is shown. In the upper
+right section of the image-matrix, a revision graph shows, which stages the model
+runs through. The other sections show relevant cut-out of the diﬀerent model’sversions and representations. The roundtrip starts (as described before) with a
+graphical model that contains the task ”Pack ordered goods” with a catching
+boundary event (I). This event leads to an exception handling in case that theordered goods are not available anymore.
+As we have already seen in section 4.2 , these events cannot be transformed
+into spreadsheets. Nevertheless, the model can still be transformed into a spread-
+sheet that still contains the task and the event (II) by using the before-presented
+transformation. Only information of an concrete connection between the two el-ements is lost here. Therefore, the doma in expert receives a model perspective
+abstracting from certain constructs but still containing information on all used
+nodes as well as their properties, which is suitable for understanding and per-forming minor changes.74 S. Krumnow and G. Decker
+Fig. 6. Examplary roundtrip of a order process model
+Now, the domain expert discovers that in cases where not all ordered goods
+are available, the customer is also called in order to inform him. So he adds a
+new task to the spreadsheet (III). Meanwhile, the method expert starts adding
+additional data to the graphical model (IV). When the domain expert sends
+the spreadsheet back, the method expert should be able to simply import thechanges performed on the spreads heet into his graphical model (V).
+Although the spreadsheet does not specify how ”Pack ordered goods” and
+the ”Goods are not available” event relat e to each other, they are still connected
+after the round-tripping transformation and the subsequent ﬂow has even been
+extended by the domain expert who only saw his incomplete spreadsheet.
+This is possible by not using T
+−1to acquire the new version g∗as before.
+Instead, we use a merging transformation M:W eg e t g∗=M(ghead,Δ), where
+Δdenotes the set of performed changes on the spreadsheet and gheadis the
+newest graphical revision. Δcan be acquired by comparing the base spreadsheet
+revision ebase(which is the same as T(gbase)) and the newest spreadsheet revision
+ehead. This brings us to:
+g∗=M(ghead,c o m p (T(gbase),ehead))
+Thus, a graphical process modeling tool can merge back changes performed on
+a spreadsheet only with the input of the (graphical) model’s head and baserevision as well as the current version of the spreadsheet. Of course, this toolA Concept for Spreadsheet-Based Process Modeling 75
+must also oﬀer the transformation Tin order to transform graphical models into
+spreadsheets. Moreover, for the imp ort of spreadsheets into the tool, T−1should
+be supported. In the next section, we will present a prototypical implementation
+of such a tool that is build on basis of the modeling tool Oryx [3].
+5.2 Protype
+In order to demonstrate the proposed round-tripping features, we implemented
+a prototype within the graphical proces s modeling tool Oryx. It meets all the
+requirements that derive from the use cases presented above.
+There are several design decisions tha th a v et ob em a d ew h e ni m p l e m e n t i n g
+such a round-tripping system, starting with the selection of supported graphicalnotations as well as the spreadsheet approaches: Among EPCs (whose trans-
+formation has not been shown here), the prototype was suppossed to support
+BPMN. When it comes to supported approaches, the main focus should be todeliver easy-to-understand spreadsheets. Due to that, only approaches I and II
+from section 3 were supposed to be supported by the prototype, especially as
+the third approach did not oﬀer much more expressiveness in the analysis.
+Thus, the developed prototype supports the round-tripping of BPMN and
+EPC models with ”Simple Sequence” and more advanced ”Branching” spread-sheets. To do so, it has to oﬀer the transformation Tfor both notations into
+two spreadsheet variants. The implementation of this export transformation is
+according to the transformation that has been presented i n section 4 but allows
+information to get lost. Therefore, also diagrams with branching and joining
+control ﬂows can be exported into the ”Simple Sequence”.
+Moreover, the prototype has to support the reimport of both spreadsheet types
+into existing models. Section shows 5.1, that this requires a merging algorithm
+Mthat merges a change set into an exis ting model as well as a comparator
+function comp that detects the performed changes on a spreadsheet. To do this,
+the comparator needs to have the spreadsheet’s revision at the time of its export.
+There are diﬀerent approaches possible to provide this version: The spread-
+sheet base revision could be provided by the user when reimporting the newest
+revision. Also, this revision can be stored within the system. Then, only the base
+revision number has to be speciﬁed. A third option is to only store a graphical
+representation of the base revision and apply transformation Ta second time,
+when the reimport is performed. As this approach saves storages and as therealready exist Oryx backends that store all former revisions of a graphical model,
+the prototype uses this last approach. It thereby stores the needed information
+to identify the base revision (model identiﬁer and revision number) directly inthe exported spreadsheet. Thus, the user does not have to provide additional
+information besides the changed spreadsheet when reimporting it.
+The comparator comp now takes two spreadsheets as input and detects all
+changes. Changes are the adding of a new row, the deletion of an existing row
+or the modiﬁcation of a existing row. A row can be modiﬁed by adding a newproperty value or by removing or changing of an existing value. Thereby, also
+successorship is handled as a property value.76 S. Krumnow and G. Decker
+Repository
+Backend
+Model InterfaceR
+Servlet
+UIR
+RTransformator
+Comparator
+MergerGraphical 
+Base 
+Revision
+Spreadsheet 
+Base 
+RevisionNew
+Spreadsheet 
+Revision
+ChangesA D MGraphical 
+Head 
+Revision
+Graphical 
+Head 
+Revision
+Fig. 7. Prototype’s components and internal dataﬂow when reimporting
+Now, the merger Mintegrates the detected change s into the graphical model.
+The deletion of a row results in the delet ion of the corresponding BPMN element
+with all its attached objects such as data. If the element was not only removedfrom the spreadsheet but also from th e graphical model in the meantime, it
+can of course not be deleted. Such a conﬂicting change can only be logged and
+displayed to the user after the reimport.
+The adding of a new element raises the problem of where to place it. The
+prototype takes a simple layouting approach here: If the element’s predecessorlays in the same lane as the new element is supposed to be put in, the element
+is placed on the right next to it and all later elements in this lane are shifted
+to the right. If the predecessor lays in a nother lane, the element is placed into
+his lane using same x-coordinate its predecessor has. All subsequent activities
+within the lane are moved to the right.
+For modiﬁed elements, properties are added, changed or removed. For the
+adding of a property value that has to be represented graphically (e.g. an input
+data object), again a simple layouting algorithm is used that ﬁnds a free spot nextto the element. Figure 7 gives a ﬁnal overview over the prototype’s components
+and its dataﬂow when reimporting a spreadsheet.
+6C o n c l u s i o n
+This paper proposes an approach to close the gap of understanding between
+process domain experts and process mod el method experts by using spread-
+sheets. The idea is to support the round-tripping of a model in both representa-
+tions in order to beneﬁt from graphical notations’ expressiveness as well as fromspreadsheets’ simplicity. The paper invest igates all relevant aspects of the idea’s
+realization and ﬁnally presents a prototype demonstrating the approach.
+First of all, it classiﬁes diﬀerent approaches how to represent business pro-
+cesses in spreadsheets. Therefore, exis ting solution are investigated as well as
+further ideas developed. Then, the transformability of the diﬀerent approachesfrom and into BPMN 2.0 is shown. The results and a large model repository
+are used to conduct an empirical analysis on the expressiveness of the diﬀerent
+approaches. On top of these transformations, a concept for the round-trippingof models is developed and realized.A Concept for Spreadsheet-Based Process Modeling 77
+This concept allows to also exchange pr ocess models, which cannot be com-
+pletely transformed, with d omain experts using simple spreadsheets. Using tech-
+niques similar to version control approaches, changes within the spreadsheet can
+be fully automatically merged into the original BPMN model, as long as no con-
+ﬂicting changes (i.e. changes on the attribute or conﬂicting removals) have beenapplied there. In order to show the applicability of this concept, we developed a
+prototype that allows for the round-tripping of BPMN (but also EPC) process
+models using spreadsheets.
+In future work, we would like to investigate to which degree the abstraction
+from certain modeling constructs during s preadsheet creati on is acceptable for
+domain and method experts, which might result in restrictions regarding the set
+of supported process models. Moreover, the prototype is going to be enhanced by
+using a customized spreadsheet editor or ma cros with the spreadsheet. Also, the
+usage of a better auto-layouter is desirable, as only simple layouting techniques
+have been used so far.
+References
+1. Business process model and notation (bpmn), version 2.0 - beta 1. Technical report,
+Object Management Group (OMG) (August 2009)
+2. Bradley, P., Browne, J., Jackson, S., Jagdev, H.S.: Business process re-engineering
+(bpr)—a study of the software tools currently available. Comput. Ind. 25(3) (1995)
+3. Decker, G., Overdick, H., Weske, M.: Oryx — an open modeling platform for the
+bpm community. In: Dumas, M., Reichert, M., Shan, M.-C. (eds.) BPM 2008. LNCS,
+vol. 5240, pp. 382–385. Springer, Heidelberg (2008)
+4. Giaglis, G.M.: A taxonomy of business process modeling and information systems
+modeling techniques. International Journal of Flexible Manufacturing Systems 13
+(2001)
+5. Giese, H., Wagner, R.: Incremental model synchronization with triple graph gram-
+mars. In: Nierstrasz, O., Whittle, J., Harel, D., Reggio, G. (eds.) MoDELS 2006.
+LNCS, vol. 4199, pp. 543–557. Springer, Heidelberg (2006)
+6. Kettinger, W.J., Teng, J.T.C.: Business process change: a study of methodologies,
+techniques and tools. MIS Q. 21(1) (1997)
+7. Tumay, K.: Business process simulation. In: WSC 1996: Proceedings of the 28th
+Conference on Winter Simulation. IEEE Computer Society, Los Alamitos (1996)

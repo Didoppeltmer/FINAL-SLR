@@ -1,0 +1,240 @@
+Research on Child and Adolescent Psychopathology (2024) 52:487–489
+https://doi.org/10.1007/s10802-024-01181-1
+than heterogeneous symptoms and syndromes. Those who 
+support RDoC emphasize that the revolutionary advances in 
+care and corresponding increased life expectancy for medi -
+cal patients, e.g., those with oncological and cardiac diag -
+noses, came from deep understanding of pathophysiological 
+mechanisms. The fields of psychology and psychiatry have 
+yet to demonstrate comparable breakthroughs and, to date, 
+the RDoC framework represents the most plausible and 
+comprehensive plan toward that end.
+The RDoC-informed goal of identifying neurobiologi -
+cal mechanisms represents a departure from the traditional 
+emphasis on the subjective experience in psychiatry, which 
+has led to concerns that this approach represents “psychiatry 
+without psyche” (Hershenberg & Goldfried, 2015 ; Parnas, 
+2014 ; Whooley, 2014 ). Indeed, the field of psychology has 
+always stood apart from traditional medicine in its empha -
+sis on subjective experiences. As noted by Dr. Maté (Maté, 
+2011 ), this distinction is illustrated by the way that the term 
+“symptom” refers to a patient’s “felt experience” in medi -
+cine, but constitutes an “external observation” in psychol -
+ogy. Critics of RDoC also point out that the emphasis on 
+understanding as a means to improving treatment could 
+delay development of systems of care that benefit groups of Research Diagnostic Criteria (RDoC) (National Institute of 
+Mental Health, 2009 ) were proposed by the National Insti -
+tute of Mental Health in 2009 to offer a nuanced, dimension-
+based alternative to the psychological categories delineated 
+in diagnostic manuals, i.e. the Diagnostic and Statistical 
+Manual of Mental Disorders (DSM) and International Clas -
+sification of Diseases (ICD) (Cuthbert & Insel, 2013 ; Insel et 
+al., 2010 ). The RDoC framework proposes that by measur -
+ing domains of positive valence, negative valence, arousal/
+regulatory, sensorimotor, cognitive, and social processes at 
+the individual level, the psychiatric sciences will be better 
+positioned to identify putative neurobiological elements, 
+circuits, and drivers of psychopathology. Thus, RDoC sets 
+the stage for a transdiagnostic system of care in which the 
+targets are specific molecular and neural mechanisms, rather 
+ Anne Arnett
+Anne.Arnett@childrens.harvard.edu
+ Jason Fogler
+Jason.Fogler@childrens.harvard.edu
+1 Boston Children’s Hospital & Harvard Medical School, 2 
+Brookline Place, 4th Floor, Boston, MA 02445, USAAbstract
+There is growing consensus that diagnostic labels are insufficient to describe the individual child’s psychiatric profile, 
+much less inform the precise combination of interventions that will minimize the impact of risk and/or bolster protec -
+tive factors over the course of a particular child’s development. Moreover, investigations of neurobiological and genetic 
+mechanisms associated with psychopathology have revealed considerable cross-diagnostic overlap, undermining the valid -
+ity of models that propose a 1:1 relationship between risk and psychiatric disorder. Accordingly, recent publications have 
+advocated for neurodevelopmental models that utilize trait-based measurement, as well as increased emphasis on integra -
+tion of biological and experiential mechanisms. Despite an expanding body of literature supporting this conceptual shift, 
+the practical implications remain unclear. In this special issue, we compile a collection of novel empirical research papers 
+and reviews that build on the trans-diagnostic principles of the RDoC framework.
+Keywords  RDoC · Transdiagnostic · Clinical psychology · Child and adolescent psychopathologyAccepted: 16 February 2024 / Published online: 27 February 2024
+© The Author(s), under exclusive licence to Springer Science +Business Media, LLC, part of Springer Nature 2024Clinical Psychology in the Era of Research Diagnostic Criteria 
+(RDoC): Reconciling Individually-Focused Practice with a Broader 
+Biopsychosocial Context
+Anne Arnett1 · Jason Fogler1
+1 3Research on Child and Adolescent Psychopathology (2024) 52:487–489individuals with common functional impairments, regard -
+less of etiology. This particular concern has been publicized 
+by one of the most visible leaders and original proponents 
+of RDoC, Dr. Tom Insel, who directed NIMH from 2002 
+to 2015 (Insel, 2022 ). In this special edition, we have chal -
+lenged researchers to apply the RDoC framework to clini -
+cally relevant issues in pediatric psychology and psychiatry, 
+testing the utility of this approach in pediatric mental health.
+The enclosed studies highlight the myriad, multidis -
+ciplinary tools available to clinical scientists keen on 
+quantifying RDoC domains that putatively underlie psy -
+chopathology. Consistent with RDoC’s prioritization of 
+behavioral and neural circuits (Cuthbert & Insel, 2013 ), 
+several studies in the collection utilized electroencephalog -
+raphy (EEG) to measure event related potentials (ERPs) in 
+association with continuous behavioral measures. Hosch et 
+al. (this volume) modeled N2 ERP amplitude as a putative 
+marker of externalizing behaviors in childhood, noting that 
+laboratory measures of inhibitory control partially medi -
+ated this brain-behavior association. The benefit of this 
+multilevel approach is that while N2 amplitudes may be 
+interpreted as a neurocognitive etiology, inhibitory control 
+is the more obvious intervention target. In contrast, and in 
+keeping with the fourth pillar of RDoC outlined by Cuthbert 
+and Insel ( 2013 ), Figuracion et al. (this volume) modeled 
+error-related ERPs as outcome variables, with temperament 
+(emotionally regulated versus dysregulated) and stimulus 
+valence (negative versus positive) as independent variables. 
+These researchers demonstrated that individual emotional 
+valence, which has been highlighted by the RDoC frame -
+work, interacts with environmental valence, a less defined 
+construct, to shape cortical functioning. Although this analy -
+sis was completed within a clinically-defined sample of ado -
+lescents with ADHD, the approach moved beyond simply 
+predicting a diagnosis to understanding the brain-behavior-
+environment interactions. This finding could be extended 
+to investigations of individuals with elevated posttraumatic 
+stress, depression, and anxiety. Babinski et al. (this volume) 
+also used ERPs as a means to explain individual variability 
+within traditionally defined psychological constructs. In a 
+model boasting strong potential for clinically translational 
+impact, this study found that enhanced cortical sensitivity to 
+social (but not monetary) reinforcement was associated with 
+higher levels of personality pathology among adolescent 
+females with high rates of mental health disorders. Thus, 
+this investigation identified a candidate biological marker 
+of mental health risk (reward positivity ERP) that dovetails 
+with a treatment target (social reward sensitivity).
+Using a uniquely objective measurement approach, 
+Somers and colleagues (this volume) described physiologi -
+cal and emotional fluctuations among infant-mother dyads 
+from low-income, Mexican-origin households. Among infants, high, stable respiratory sinus activity (RSA) was 
+predictive of positive affect and protective against negative 
+affect; moreover, high-RSA infants were most responsive 
+to their mothers’ own affective changes. This investiga -
+tion therefore presents a measurable, biological moderator 
+of parenting practices on infant mental health. Similarly, 
+Lorenzo et al. (this volume) examined transactional effects 
+of parenting through a moderated mediation model. In a lon -
+gitudinal investigation of children followed from age three 
+through adolescence, the association between early exuber -
+ant temperament and later ADHD symptoms was explained 
+by childhood executive functioning, but only among chil -
+dren whose parents used a low directiveness parenting style.
+Aitkin and colleagues (this volume) remind us that behav -
+ior often varies across social contexts, and this variability 
+may be leveraged toward a more comprehensive individual 
+assessment. This study found that parent-, teacher-, and 
+youth self-informant ratings increased predictive validity 
+for functional outcomes in children and adolescents when 
+modeled as individual predictors rather than in a standard -
+ized or aggregated form. Gornik et al. (this volume) likewise 
+directed our attention to environmental context, framing 
+opportunity as a contextual factor in which to better under -
+stand cognitive development. This longitudinal study found 
+a potential cumulative effect of low opportunity on language 
+development, providing a poignant reminder that biological 
+markers do not exist in a vacuum, and that the longitudinal 
+stability of RDoC constructs should also be well defined, 
+particularly in developmental research.
+The fifth pillar of RDoC reviewed by Cuthbert and Insel 
+(2013 ) emphasizes that behavioral constructs must map 
+onto biological ones. Wang et al. (this volume) identified 
+multiple profiles of adolescent temperament and behavior 
+that were not only predictive of alcohol use in adulthood, 
+but were also heritable. This approach therefore validated 
+the identified behavioral constructs while simultaneously 
+providing a window into the ways that alcohol use problems 
+may pass through families.
+A number of studies in this collection underscore the 
+necessity of measuring RDoC constructs in a dimensional 
+way, i.e. examining variance at both ends of the spectrum 
+(second pillar, Cuthbert & Insel, 2013 . Edmunds et al. (this 
+volume) reported that children with autism spectrum dis -
+order differed from typically developing children on one 
+end of the irritability dimension (soothability) but not the 
+other (frustration). Elahi and colleagues (this volume) high -
+lighted how meaningful subtypes of ADHD-related symp -
+tomatology could be stratified by the dimensions of “hot” 
+and “cold” executive functioning, and that treatment could 
+be tailored accordingly. Relatedly, Peisch et al. (this vol -
+ume) found that the association between family liability 
+1 3488Research on Child and Adolescent Psychopathology (2024) 52:487–489for ADHD and youth ADHD outcomes was weaker among 
+youth with strong effortful control.
+The term “transdiagnostic” is frequently invoked to place 
+research designs in an RDoC framework. The implication of 
+this term is that a biomarker, treatment target, or continuous 
+measurement tool should demonstrate measurement invari -
+ance across DSM-based diagnoses. Spellun and colleagues 
+(this volume) addressed this issue among children who are 
+deaf and hard of hearing by examining whether the Behav -
+ior Assessment System for Children-3 was a valid tool for 
+measuring psychiatric and adaptive behaviors in this clini -
+cal group.
+This collection of studies highlights how well the RDoC 
+framework can be applied to the field of developmental 
+psychopathology. In particular, the joint consideration of 
+psychological and biological correlates of mental health 
+and functioning has already expanded what we know about 
+child mental health. We are not the first to suggest models 
+for reconciling RDoC with a more psychologically minded 
+approach to mental distress (Conradt et al., 2021 ; Garber 
+& Bradshaw, 2020 ; Lilienfeld, 2014 ). Yet, the astute reader 
+will also recognize that nearly all studies in the collection 
+were unable to completely disentangle their work from 
+DSM-based diagnostic categories. This is in direct conflict 
+with the last of the seven pillars of RDoC defined by Cuth -
+bert and Insel ( 2013 ), which notes that a pitfall of the cur -
+rent diagnostic nosology is its inflexibility with respect to 
+incorporating new knowledge as it is gained. Nonetheless, 
+the studies published herein address the practical objec -
+tive of the RDoC initiative, which is to translate improved 
+understanding of etiology and mechanisms to more effec -
+tive clinical care, such as preventative interventions and 
+individualized treatments. Moreover, much of this work 
+demonstrates a potentially more practical application of 
+RDoC, wherein the combination of biopsychosocial and 
+diagnostic measurement serves to increase the flexibility of, 
+and thereby strengthen, our existing diagnostic nosology.
+Declarations
+Conflict of interest  The authors have no conflicts of interest to dis -
+close.References
+Conradt, E., Crowell, S. E., & Cicchetti, D. (2021). Using development 
+and psychopathology principles to inform the Research Domain 
+Criteria (RDoC) framework. Development and Psychopathology , 
+33(5), 1521–1525.
+Cuthbert, B. N., & Insel, T. R. (2013). Toward the future of psychiatric 
+diagnosis: The seven pillars of RDoC. BMC Medicine , 11(1), 1–8.
+Garber, J., & Bradshaw, C. P. (2020). Developmental psychopathology 
+and the research domain criteria: Friend or foe? Journal of Clini -
+cal Child & Adolescent Psychology , 49(3), 341–352.
+Hershenberg, R., & Goldfried, M. R. (2015). Implications of RDoC for 
+the research and practice of psychotherapy. Behavior Therapy , 
+46(2), 156–165.
+Insel, T. (2022). Healing: Our path from mental illness to mental 
+health . Penguin.
+Insel, T., Cuthbert, B., Garvey, M., Heinssen, R., Pine, D. S., Quinn, 
+K., & Wang, P. (2010). Research domain criteria (RDoC): Toward 
+a new classification framework for research on mental disorders  
+(V ol. 167, pp. 748–751). Am Psychiatric Assoc.
+Lilienfeld, S. O. (2014). The Research Domain Criteria (RDoC): An 
+analysis of methodological and conceptual challenges. Behaviour 
+Research and Therapy , 62, 129–139.
+Maté, G. (2011). Scattered minds: The origins and healing of attention 
+deficit disorder . Vintage Canada.
+National Institute of Mental Health, N (2009). About the RDoC 
+Framework. Retrieved from https://www.nimh.nih.gov/research/
+research-funded-by-nimh/rdoc/about-rdoc .
+Parnas, J. (2014). The RDoC program: Psychiatry without psyche? 
+World Psychiatry , 13(1), 46.
+Whooley, O. (2014). Nosological reflections: The failure of DSM-5, 
+the emergence of RDoC, and the decontextualization of mental 
+distress. Society and Mental Health , 4(2), 92–110.
+Publisher’s Note  Springer Nature remains neutral with regard to juris -
+dictional claims in published maps and institutional affiliations.
+Springer Nature or its licensor (e.g. a society or other partner) holds 
+exclusive rights to this article under a publishing agreement with the 
+author(s) or other rightsholder(s); author self-archiving of the accepted 
+manuscript version of this article is solely governed by the terms of 
+such publishing agreement and applicable law. 
+1 3489

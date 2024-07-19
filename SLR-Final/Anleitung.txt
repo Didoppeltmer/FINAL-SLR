@@ -1,0 +1,4 @@
+1. Starte eine der x_main.py Datein um alle Ordner zu erzeugen
+2. Füge deinen API Key von der Entsprechende API in die x_main.py Datei unter Konfiguration ein.
+3. Ziehe Test-PDFs in den Ordner Verfügbare_PDFs
+4. Run die x_main.py Datei

@@ -1,0 +1,470 @@
+ORIGINAL ARTICLE
+A policy-based process mining framework: mining
+business policy texts for discovering process models
+Jiexun Li ÆHarry Jiannan Wang ÆZhu Zhang Æ
+J. Leon Zhao
+Received: 25 May 2008 / Revised: 30 November 2008 / Accepted: 14 January 2009 /
+Published online: 11 April 2009/C211Springer-Verlag 2009
+Abstract Many organizations use business policies to govern their business pro-
+cesses, often resulting in huge amounts of policy documents. As new regulations
+arise such as Sarbanes-Oxley, these business policies must be modiﬁed to ensuretheir correctness and consistency. Given the large amounts of business policies,manually analyzing policy documents to discover process information is very time-consuming and imposes excessive workload. In order to provide a solution to thisinformation overload problem, we propose a novel approach named Policy-basedProcess Mining (PBPM) to automatically extracting process information frompolicy documents. Several text mining algorithms are applied to business policy
+texts in order to discover process-related policies and extract such process com-
+ponents as tasks, data items, and resources. Experiments are conducted to validatethe extracted components and the results are found to be very promising. To the bestof our knowledge, PBPM is the ﬁrst approach that applies text mining towards
+J. Li (&)
+College of Information Science and Technology,Drexel University, Philadelphia, PA, USAe-mail: jiexun.li@ischool.drexel.edu
+H. J. Wang
+Department of Accounting and MIS, Lerner College of Business and Economics,
+University of Delaware, Newark, DE, USA
+e-mail: hjwang@lerner.udel.edu
+Z. Zhang
+Department of MIS, Eller College of Management,University of Arizona, Tucson, AZ, USAe-mail: zhuzhang@u.arizona.edu
+J. L. Zhao
+Department of Information Systems,City University of Hong Kong, Kowloon, Hong Kong SAR, Chinae-mail: jlzhao@cityu.edu.hk
+123Inf Syst E-Bus Manage (2010) 8:169–188DOI 10.1007/s10257-009-0112-xdiscovering business process components from unstructured policy documents. The
+initial research results presented in this paper will require more research efforts tomake PBPM a practical solution.
+Keywords Process mining /C1Business process management /C1Text mining /C1
+Business policy management
+1 Introduction
+Business policies enable the efﬁcient management of an organization by deﬁning
+the standard procedures and rules for its daily business operations, e.g., elevenorganization-wide policies are identiﬁed in (Peltier 2004 ), such as Employee
+Standards of Conduct, Workplace Security, Information Security, BusinessContinuity Planning, to name a few. Among various types of business policies,many of them are used to deﬁne or constraint some aspects of business processes,such as order fulﬁllment, product development, travel reimbursement, and cashhandling, which we refer to as process policies. For instance, a travel reimbursement
+policy may deﬁne that a reasonable exception request form (RERF) must be
+submitted if a travel reimbursement form (TRF) is submitted later than 60 daysupon completing the travel. This policy speciﬁes the condition under which RERFsubmission task must be executed.
+In order to describe a business process, a great amount of process policies are often
+needed to be established. For example, we studied a major US public university’sbusiness policy manual in our previous research (Wang et al. 2006 ), which has 19
+sections with average 10 subsections in each section. In particular, the subsection on
+travel regulation by itself includes 14 topics with more than seven thousand words.
+Recently, in order to achieve various regulatory compliances such as Sarbanes-Oxley,organizations are investing a great amount to revamp their business policies. Theprocess owners, executives, internal and external auditors often have to study businesspolicy manuals that have hundreds or thousands of pages to understand entire businessprocesses, which is a time-consuming and overwhelming task. In addition, it is also achallenge for employees to ﬁnd the information about processes to do their jobcorrectly and efﬁciently due to the huge amount of policies. We refer to this problem
+as process policy information overload. As such, there is a great demand for solutions
+that can assist process users and owners to analyze process policies in order todiscover process information more efﬁciently and effectively.
+In this paper, we propose a Policy-based Process Mining (PBPM) framework to
+enable automatic process model extraction from business policies using informationextraction techniques. PBPM aims to provide a solution to the process policyinformation overload problem by automatically parsing business policies todetermine what policies are process-related and to identify process components such
+as tasks, data items, and resources, which can be used to construct graphical process
+models. We argue the resulting process models visualize the related narrative processpolicies, which can greatly reduce the cognitive load of process owners and users.Several experiments based on real world business policies are conducted to show the170 J. Li et al.
+123feasibility of our approach and the results are very promising. The contributions of
+this paper are as follows. First, we propose an innovative framework for the automaticdiscovery of process models based on business policies, which we refer to as PBPM.
+Second, we demonstrate the feasibility of PBPM by conducting experiments with
+several text mining techniques and discussing the results. Third, we summarize keychallenges for PBPM into a set of research issues in this important area betweenbusiness process management and text mining. PBPM bridges a critical gap betweencommercial needs and existing process mining research and therefore can have greatimpacts on both industry practice and academic research.
+The rest of this paper proceeds as follows. In the next section, we review the
+relevant literature. Then, we present the PBPM framework in Sect. 3. In Sect. 4,w e
+report experiments based on two sets of real world business policies to demonstrate
+the feasibility of our approach, where the results are found to be very promising.Research issues that need to be addressed to further develop PBPM approach arediscussed in Sect. 5. Finally, we summarize our contributions in Sect. 6.
+2 Literature review
+In this section, we ﬁrst review related work in process mapping and process mining.
+Then, we review some existing techniques of statistical learning for informationextraction from texts.
+2.1 Process mapping and process miningUnderstanding existing organizational processes, i.e., as-is process models, is the
+foundation for any further process changes and improvements (Kettinger et al.
+1997 ). Process mapping is a set of methodologies and tools that help organizations
+identify, understand, and improve their as-is processes (Hunt 1996 ). Traditional
+process mapping approaches are participative, where interviews, meetings, andworkshops are used as the major instruments to collect process information (Cobb2004 ; Madison 2005 ; Scheer 2000 ). Different from a participative approach, an
+analytical process mapping approach aims to derive process model by using formaltheory and techniques. Various formal methods such as linear programming(Aldowaisan and Gaafar 1999 ), process cost optimization (van der Aalst 2000 ),
+computational experiments (Hofacker and Vetschera 2001 ), and probability theory
+(Datta 1998 ) have been applied to analytical process design and redesign. Workﬂow
+design based on data dependencies has also been proposed (Reijers et al. 2003 ).
+Although business policies have been used in both traditional and analytical processmapping approaches aforementioned, no existing method has focused on derivingprocess models from business policies in a systematic manner. In our previousresearch, we proposed a policy-driven process mapping methodology, whichleverages business policies and extract process models from policies by following a
+set of algorithms and rules (Wang et al. 2006 ). Although that approach shows the
+possibility and provides insights for process model extraction based on businesspolicies, the procedure of analyzing business policies for process information is stillA policy-based process mining framework 171
+123manual, which does not provide direct solution for the process policy information
+overload problem discussed in the previous section. This paper is built on top of ourprevious work, which aims to automate the process model extraction from business
+policies using information extraction and text mining techniques.
+In recent years, there has been extensive research on process mining (PM) and
+many tools and techniques have been developed (van der Aalst and Weijters 2004 ).
+PM aims at the automatic discovering of process, control, data, organizational, andsocial constructs based on the event logs produced by contemporary informationsystems, such as ERP, CRM, and Workﬂow Management Systems (van der Aalstet al. 2007 ). The most well-known process mining algorithms are integrated in an
+open source toolset named ProM ( http://www.processmining.org ). ProM can import
+various types of event logs into a standard XML format and then construct process
+models from the logs, which are represented as Petri nets. Different from processmining, there also has been an increasing interest in monitoring business processes,which is often referred to as BAM (Business Activity Monitoring) and BPI(Business Process Intelligence) (Grigori et al. 2004 ). BAM and BPI applied classical
+data mining techniques to the event logs to discover knowledge on various per-formance indicators, such as ﬂow time, resource utilization, and cost, which can beused to identify bottlenecks and modeling problems in business processes. There
+have been many commercial BAM and BPI tools, such as Business Objects, Cognos
+BI, ARIS Process Performance Monitor, and Hyperion. Our approach is related toboth PM and BPI, because we leverage data mining techniques and aim to constructprocess models. However, unlike PM and BPI, our approach is unique by leveragingunstructured business policy documents rather than structured system event logs asinputs. In addition, the main goal of our approach is to reduce process policyinformation overload, which is not the purpose of PM and BPI.
+2.2 Statistical learning for information extraction
+Statistical learning, the main vehicle for ﬁnding patterns in data, can be categorized
+into feature methods and kernel methods. For feature methods, each data instancemust be represented as a vector of n explicitly deﬁned features to capture the datacharacteristics, X=(x
+1,x2,…,xn). Text mining tasks often use words or phrases as
+features, which can lead to high-dimensionality but sparse feature vectors.Furthermore, for sentences represented in complex structures such as a parse tree,
+features cannot be easily deﬁned to capture the structural information. Kernel
+methods are an effective alternative to feature methods for machine learning(Cristianini and Shawe-Taylor 2000 ). They retain the original representation of
+objects and use the object only via computing a kernel function between a pair ofobjects. Formally, a kernel function is a mapping K:X9X?[0,?) from input
+space Xto a similarity score K(x,y)=/(x)/C1/(y)=P
+i/i(x)/i(y), where /i(x)i sa
+function that maps Xto a higher dimensional space with no need to know its explicit
+representation. Such a kernel function makes it possible to compute the similarity
+between objects without enumerating all the features. Given a kernel matrix of pair-
+wise similarity values, a kernel machine, such as a support vector machine (SVM)(Cristianini and Shawe-Taylor 2000 ), can train a model for future prediction.172 J. Li et al.
+123In Natural Language Processing (NLP), information extraction is aimed at
+automatically extracting structured information from unstructured text. Kernel-based learning methods have been applied to various information extraction tasks.
+For simple data representations (e.g., ‘‘bag-of-words’’) in which features can be
+easily extracted, some basic kernel functions such as linear kernel, polynomialkernel, and Gaussian kernel are often used. For data in structured representation,convolution kernels are frequently used (Collins and Duffy 2002 ). Convolution
+kernels are a family of kernel functions, including string/sequence kernels (Lodhiet al. 2002 ), tree kernels (Zelenko et al. 2003 ), and so on. They deﬁne the similarity
+between objects as the convolution of ‘‘sub-kernels,’’ i.e., the kernels for thedecomposition of the objects. String kernels capture the sequence patterns in data
+instances. Lodhi et al. ( 2002 ) deﬁned string kernels on letter or word sequence in
+sentences for text classiﬁcation. Tree kernels capture the structure of syntactic parsetree and have been applied in relation extraction (Zelenko et al. 2003 ). Some recent
+studies have revised these tree kernels by incorporating richer semantic information(Bunescu and Mooney 2005 ; Culotta and Sorensen 2004 ). Another advantage of
+kernel methods is that they transform different data representations into kernelmatrices of the same format, which enables the integration of heterogeneousinformation (Cristianini and Shawe-Taylor 2000 ).
+Named entity recognition (NER) is an important information extraction task.
+During the past decade, NER development has been mostly promoted by the MessageUnderstanding Conference (MUC) (Voorhees 2001 ). The MUC NER task was to mark
+each string that represents a person, an organization, a place, a date/time stamp, acurrency, or a percentage ﬁgure. The performance achieved in MUC-7 ranged from 73to 95% in precision, 66 to 92% in recall, and 69.7 to 93.4% in F-measure (Marsh andPerzanowski 1998 ). NER is typically formulated as a sequence labeling problem and
+historically approached with directed graphical models, which views the sequence
+labeling problem as ‘‘models of paired input sequences and label sequences’’ (Sha and
+Pereira 2003 ). Directed graphical models such as Hidden Markov models (HMMs),
+Linear interpolated HMMs, and back-off HMMs are trained to maximize the jointprobability of the training data. They require very strict independence assumptions onthe data. In a similar view, undirected graphical models, such as Maximum EntropyMarkov Models (MEMMs) and Conditional Random Fields (CRFs), are trained tomaximize the joint probability distribution over the label sequence conditional on theinput linguistic sequence, where the distribution respects the independence relations
+encoded in a graph (Lafferty et al. 2001 ). In general, the labels are not assumed to be
+independent, nor are the observations conditionally independent given the labels, as istypically assumed in directed graphical models such as HMMs.
+3 A framework for policy-based process mining
+In this section, we present the framework for PBPM. In our previous research
+(Wang et al. 2006 ), we conducted a case study of a business policy manual and
+found that rich process information can be found in those policies to constructA policy-based process mining framework 173
+123graphical process models via a systematic procedure. That research serves as the
+foundation for our PBPM approach in this paper.
+3.1 Foundation for policy-based process mining
+Figure 1is a screenshot of the business policy manual for a major US midwest
+public university. This manual is published online and is accessible to the public.In particular, we chose the section on travel approval and reimbursement fordetailed analysis, which has been widely implemented in most organizations.Business policies can be ﬁrst divided into two categories, i.e., process policies andnon-process policies, according to whether the policy is related to processes or not.
+For example, the policy statement ‘‘The University’s business policies are aligned
+with the Internal Revenue Service (IRS) rules and regulations’’ is a non-processpolicy, because it does not contain information related to any business process. Incontrast, the policy statement ‘‘All travel must be authorized and approved by theappropriate administrative ofﬁcer within the unit’’ is a process policy, because itdeﬁnes tasks, i.e., travel authorization and travel approval, which are parts of thetravel approval business process. Given our goal is to construct process models,non-process related policies should be identiﬁed and excluded for further analysis.
+To better classify process policies, four types of process policies are further
+deﬁned, which correspond to the four major perspectives of a process model,namely, control ﬂow, data ﬂow, organizational model, and constraints (Basu andKumar 2002 ;O M G 2005 ). For example, the second policy in the previous
+paragraph is a control ﬂow policy, which is a task identiﬁcation policy morespeciﬁcally. As another example, the policy statement ‘‘Disbursement ServicesCenter (DSC) must review the reimbursement form’’ is a process constraint policy,
+Fig. 1 Screenshot of an online business policy manual174 J. Li et al.
+123which assigns an organization resource, i.e., DSC, to execute the task ‘‘Review
+Reimbursement Form.’’ Note that a process policy could be of multiple types. Forinstance, the policy ‘‘After the TRF is approved, a check will be issued’’ is a control
+ﬂow policy and also a data ﬂow policy, because it identiﬁes two tasks ‘‘Submit
+TRF’’ and ‘‘Issue Check,’’ and two corresponding data items TRF and Check. Thispolicy also deﬁnes the execution order of the two identiﬁed tasks, which can be usedto construct the control ﬂow model of the business processes. If process policies arecomplete, all process components and their relationships can be identiﬁed from thepolicies to construct process models. Detailed discussion on different types ofprocess policies and their relationships can be found in (Wang and Zhao 2005 ;
+Wang et al. 2006 ). We summarize the key ﬁndings of the case study as follows,
+which are the foundation for automatic policy-based process mining:
+•Process policies should be distilled from business policies to construct process
+models, whereas non-process related policies should be excluded.
+•Process components including tasks, data items, and resources can be identiﬁed
+from business policies as the building blocks of process models.
+•Relationships among process components, such as ordering relationship between
+tasks and data dependency relationships, can be identiﬁed from business policiesto construct process models.
+Next, we present the details of the framework for policy-based process mining.
+3.2 PBPM frameworkFigure 2shows the framework for policy-based process mining. The inputs of
+PBPM are the business policies in natural language and the outputs are the processmodels deﬁned by the policies. PBPM consists of four major steps as discussed
+below:
+Step 1: process policy selection. In this step, the process policies are separated
+from non-process policies to reduce the volume of policies needed for process
+model construction. We view this as a typical text classiﬁcation problem. More
+speciﬁcally, domain experts are recruited to manually classify the policies aseither process related or non-process related, which serve as the training data tothe classiﬁcation algorithms. Then, the trained classiﬁer will be used toautomatically identify process policies from business policies.Step 2: process component identiﬁcation. Individual process components areidentiﬁed from process policies selected by Step 1. In particular, we are interestedin three process components: tasks, data items, and organizational resources.
+From a text mining point of view, we need to solve a NER problem, which is a
+sub-problem in information extraction. Typically, the NER problem is formulatedas a sequence labeling problem, and one can approach it with HMMs or CRF.Existing general-purpose NER tools such as GATE ( http://gate.ac.uk/ ) or Ling-
+Pipe ( http://www.alias-i.com/lingpipe/ ) are not directly applicable to our prob-
+lem; therefore we need to retrain customized statistical models to extract entitytypes of our interest. Given the process components identiﬁed in Step 2, we canA policy-based process mining framework 175
+123incorporate such information back to Step 1 so as to improve the process selection
+performance, e.g., the existence (or non-existence) of process components in atext chunk may increase (or decrease) the possibility of it being policy-related.Step 3: component relationship extraction. After the process components areidentiﬁed, their relationships are extracted in this step. Speciﬁcally, we areinterested in the following relationships: the ordering relationships between tasks,
+data dependency relationships, the relationships among process resources. Task
+execution order relationship can be directly used to construct control ﬂow model.Data dependency can be used to build data ﬂow model and in addition can beused to infer task sequences as discussed in our previous research (Wang et al.2006 ). Technically, identifying relationships among entities is another sub-
+problem in information extraction. Rule-based methods and statistical learningmethods are both potentially applicable to extracting intra-sentence relationshipsbetween components. Moreover, a more challenging task is to identify
+relationships among components across different sentences, which still has not
+been well studied in the information extraction ﬁeld.Step 4: process model construction. Given the process components and theirrelationships, process analysts can construct the process models. Processconstruction algorithms supported by visualization tools will be developed tohelp build process models. Due to the fact that business policies are oftenincomplete and contain ambiguities, more process data may need to be collectedto completely specify the process models. In addition, some other issues such as
+eliminating process syntactical and semantic errors are also handled in this step as
+discussed in (Wang et al. 2006 ). Compared with the bulky policy documents, it is
+much easier and more efﬁcient for the process analysts to understand the
+PBPMPBPM
+Process ModelsBusiness Policies
+1. Process Policy Selection
+2. Process Component Identification
+3. Component Relationship Extraction
+4. Process Model Construction
+Fig. 2 Policy-based process mining (PBPM) framework176 J. Li et al.
+123identiﬁed process components and relationships and use them to derive process
+models.
+The main objective of PBPM is to automatically extract process models from
+narrative business policies to reduce the cognitive load of process owners and users.
+In addition, as shown in the Figure 2, PBPM also builds a bi-directional link
+between business policies and corresponding process models. This link can be usedto check whether the business policies represent the actual processes in the ﬁeld.Also, when policies and processes are changing as response to new regulations,customer demand, and market opportunities, this automatically constructed link canbe used to identify the potential inconsistencies between them and therefore greatlyfacilitate the maintenance of their compatibility. In this paper, we demonstrate thefeasibility of PBPM approach by focusing on the ﬁrst two steps. In particular, we
+present the details on how we formalize the ﬁrst two steps next and discuss the
+experiments and results in Sect. 4. The challenges and research issues in PBPM,
+especially for Steps 3 and 4, will be presented in Sect. 5, which call for more
+research effort in this emerging research area. The entire PBPM framework can onlybe validated after experiments are conducted for the last two steps, which is themain goal of our feature research.
+3.3 Process policy selection
+In this section, we focus on Step 1 of PBPM framework, i.e., process policy
+selection, and formalize it as a sentence-level text classiﬁcation problem. Eachsentence sfrom a policy document is regarded as a data instance, and to be assigned
+a label lbased on its relatedness to business processes. Speciﬁcally, label \P[
+stands for process and \NP[stands for non-process. Formally, the goal is to deﬁne
+or approximate a function
+f:s!ll2fPhi ;NPhi g
+The rationale of our approach is that sentences related to business process may
+exhibit certain lexical or syntactic patterns. We can use statistical learningtechniques to extract these patterns by training a classiﬁcation model on a corpus oflabeled policy sentences. Thus, the trained model can be used to extract process
+from new policy documents. In this study we compare two statistical learning
+methods, i.e., a ‘‘bag-of-words’’ feature method and a tree-kernel method, forprocess policy selection.
+3.3.1 Bag-of-words feature methodThe ‘‘bag-of-words’’ method is a simple yet widely-used technique in text
+classiﬁcation studies. It represents a chunk of text (in this case, a sentence) as a
+vector, in which each element indicates the occurrence of a speciﬁc word. Speciﬁcally,
+if a word woccurs in a sentence s, then in the feature vector representation of s, the
+feature corresponding to wtakes a value ‘‘1’’; if wdoes not occur in s, the feature takes
+a value of ‘‘0’’. As a result, each data instance is represented as a vector of 1’s and 0’s,A policy-based process mining framework 177
+123e.g., (1, 0, 0, 1, 0, …, 1, 0). For instance, given a sentence ‘‘Purchasing will take action
+by telephone and mail a conﬁrming order to the vendor,’’ it can be represented as avector in which features corresponding to the words within the sentence (e.g.,
+‘‘purchasing,’’ ‘‘will,’’ ‘‘take,’’ and so on) equal 1 while others equal 0. In this method,
+the dependencies among words are ignored, and the total number of features isdetermined by the total number of words in the text corpus.
+3.3.2 Tree Kernel methodIn text mining, sentences are usually represented as syntactic parse trees to capture
+the syntactic structure. A parse tree is made up of nodes connected by branches.
+Each leaf node corresponds to a word. Each node in the tree is annotated with a part-
+of-speech (POS) tag. Figure 3shows the parse tree representation of the same
+exemplar sentence, where NP is a noun phrase, PP is a prepositional phrase, NN is anoun, VB is a verb, and MD is a modal. A tree (or a subtree) Tis represented as
+give, where pis the T’s root node with a set of attributes V={v
+1,v2,…} and [ T.c]
+denotes p’s children (nodes or subtrees). The node attributes often consist of word,
+POS, etc. Tree kernels can capture both the node attributes and the structuralinformation of parse trees. They have been applied to information extraction
+(Culotta and Sorensen 2004 ; Zelenko et al. 2003 ). A tree kernel function computes
+the similarity between two parse trees by comparing their nodes and subtrees in atop-down fashion. A high similarity score of two parse trees indicates that the twosentences share common syntactic patterns and therefore tend to be in the sameclass. To deﬁne a tree kernel, we ﬁrst need to deﬁne two functions over tree nodes: amatching function m(p
+i,pj)[{0,1} and a similarity function s(pi,pj)[[0,?).
+The matching function determines whether two nodes are matchable (e.g., havingthe same POS tags) by comparing a subset of attributes, V
+m7V:
+Fig. 3 A parse tree representation of a sentence178 J. Li et al.
+123mðpi;pjÞ¼1;ifvi
+k¼vj
+k;8vk2Vm
+0; otherwise/C26
+where vi
+kandvj
+kis the value of attribute vkof nodes piandpj, respectively.
+If two nodes are matchable, i.e., they share the same values of the matching
+attributes, then the similarity function is computed by comparing the other attributesof nodes, V
+s7V:
+sðpi;pjÞ¼X
+vk2VsxkCðvi
+k;vj
+kÞ
+where 0 \xkB1 is the weight of attribute kand Cðvi
+k;vj
+kÞis a function that
+computes the compatibility between two attribute values (e.g., words):
+cðvi
+k;vj
+kÞ¼1;ifvi
+k¼vj
+k
+0;otherwise/C26
+Then s(pi,pj) returns the weighted number of attributes values in common
+between piandpj. For two relation instances T1andT2, we deﬁne the tree kernel
+KT(T1,T2) that includes the similarity of the parent nodes and the similarity of the
+children (i.e., nodes or sub-trees).
+KTðT1;T2Þ¼0; ifmðT1:p;T2:pÞ¼0
+sðT1:p;T2:pÞþKcðT1:c;T2:cÞ; otherwise/C26
+where the similarity function Kc deﬁned over children nodes T.c.
+Letibe a sequence of indices such that i1Bi2B_Bin, and likewise for j.
+Let d(i)=in-i1?1 and l(i) be the length of i. For a relation instance T,
+letT[i] denote a subsequence of children T.c={T[i1],…,T[in]}. Then we have
+KcðT1:c;T2:cÞ¼X
+i;j;lðiÞ¼lðjÞkdðiÞkdðjÞKðT1½i/C138;T2½j/C138Þ
+where constant 0 \kB1 is a decay factor that decreases the similarity between
+two sequences that are spread out within children sequences. For a pair of matchinginstances T
+1and T2such that m(T1.p,T2.p)=1, the kernel function K(T1,T2)
+needs to recursively compute the matching sequences of their children and
+accumulate the similarity scores.
+3.4 Process component identiﬁcationIn this section, we focus on Step 2 of PBPM: process component identiﬁcation.
+We ﬁrst discuss some challenges related to this step as follows.
+3.4.1 Key challenges of process component identiﬁcation
+Challenge 1: Deﬁning key process components. In general, a business process
+model has three major perspectives: control ﬂow, data ﬂow, and organization (Basuand Blanning 2000 ). Control ﬂow describes the tasks in the process and their
+execution sequences. Data ﬂow concerns the data items consumed and produced byA policy-based process mining framework 179
+123each task. The organizational perspective speciﬁes the roles, users, and their
+relationships. These three perspectives deﬁne the key building blocks of a processmodel: task, data item, and resource. For example, given a policy statement
+‘‘Requests for exceptions must be submitted to the Executive Director, University
+Payables for consideration,’’ we can identify ‘‘submitted’’ as a task, ‘‘Requests forexception’’ as a data item, and ‘‘Executive Director’’ and ‘‘University Payables’’ asresources. While process models also contain other components such as processconstraints and routing constructs, we defer these other components to our futureresearch.
+Challenge 2: Capturing linguistic patterns of process components. Based on
+several case studies on policy documents, we found that data items and resources
+are often speciﬁed as objects/entities, such as ‘‘reimbursement form,’’ ‘‘department
+head,’’ etc. whereas tasks are often relate to actions such as ‘‘submit,’’ ‘‘approve,’’etc. Compared with other NER tasks, process component identiﬁcation is morechallenging in that the objects of interest are not speciﬁc objects such as companies,or locations, but generic terms. Morphological features such as the preﬁx and thesufﬁx that are effective in recognizing named entities are not applicable in this case.We need to develop a good feature set that can capture the linguistic patterns relatedto process components.
+Challenge 3: Developing and testing extraction techniques. Due to the unique
+characteristics of business process components, existing general-purpose NER toolsare not directly applicable to process component identiﬁcation. Therefore, we needto examine different information extraction techniques for their ability ofidentifying process components of our interest.
+3.4.2 Process component identiﬁcation procedure
+We formulate this task of process component identiﬁcation as a sequence labeling
+problem. Each sentence s from a policy document contains multiple tokens. Eachtoken is either a word or a punctuation mark. The objective is to assign a label toeach token to indicate whether it is (a part of) a process component of the threetypes: task, data item, and resource. Speciﬁcally, a BIO labeling schema can beused, where label B, I, and O denote the beginning of a component, the continuationof a component, and a word that is not part of a component, respectively.
+Rule-based approaches are widely used in information extraction, but they often
+require developing a domain-speciﬁc lexicon or templates. This can be very tedious
+for domain experts, especially for new domains like business process. Instead, wepropose to use a statistical learning approach to automatically learn the linguisticpatterns and identify process components from policy documents. Figure 4shows
+the procedure of process component identiﬁcation, including four steps: manualannotation, feature extraction, statistical learning, and evaluation.
+Manual annotation: Although statistical learning does not require manual
+encoding of rules, we need a corpus with all process components annotated by
+domain experts to train a statistical model. Speciﬁcally, we focus on three types of
+process components: task \T[, data item \D[, and resource \R[. For instance, the
+policy aforementioned can be tagged as follows: ‘‘ \D[Requests for exceptions180 J. Li et al.
+123\/D[must be \T[submitted \/T[to the \R[Executive Director \/R[,\R[Uni-
+versity Payables \/R[for consideration.’’ To facilitate the tagging process, we
+developed a text tagger using Visual Basic 2005 as shown in Figure 5.
+Statistical learning: Given an annotated corpus with a predeﬁned feature set, we
+can use a certain statistical learning technique to extract the linguistic patterns andtrain a model for process component identiﬁcation. Among multiple statisticallearning techniques, we selected CRFs, a state-of-the-art discriminative probabilis-tic model for sequence labeling (Lafferty et al. 2001 ). CRFs are undirected
+graphical models in which each vertex represents a random variable and each edge
+represents a dependency between two variables. For sequence labeling, CRFs deﬁne
+a conditional probability distribution over label sequences given a particularobservation sequence. Their conditional nature relaxes the independence assump-tions required by HMMs (Rabiner 1989 ). Besides, CRFs solve the label bias
+problem in conditional Markov models based on directed graphical models. CRFshave been shown to outperform MEMMs (McCallum et al. 2000 ) and HMMs in a
+number of real-world applications.
+Evaluation: After the CRFs model is trained using the annotated corpus, we need
+to evaluate its performance against a testing set. A standard cross-validation method
+can be used for evaluation. Some common evaluation metrics in informationSentences in policy documents
+Feature Extraction Manual Annotation
+- Word features
+- Part-of-speech (POS) tags
+Conditional Random Fields (CRFs)Statistical Learning
+Evaluation
+Cross-validation by accuracy, precision, recall, & F-measure- Tasks <T>- Data items <D>
+- Resources <R>
+ 
+Fig. 4 Procedure of process component identiﬁcation from policy documents
+Fig. 5 Screenshot for text taggerA policy-based process mining framework 181
+123extraction are used including accuracy, precision, recall, and F-measure. A well-
+trained model can be used to identify process components from new policydocuments.
+4 Experimental studies
+In this study, we conducted several experiments to demonstrate the feasibility of our
+PBPM approach. Speciﬁcally, we focus on the ﬁrst two steps: process policyselection and process component identiﬁcation.
+4.1 Data description and annotation
+Our experimental studies include two sets of policies: the ﬁrst set is from the
+purchasing policy manual of a major US southwest public university, and the secondset is from the travel policy manual of a major US midwest public university. Bothsets of policies are publicly available html webpages, which are automaticallydownloaded, converted to text, and segmented into sentences. In total, thepurchasing policy contains 337 sentences and the travel policy contains 202
+sentences.
+Our proposed approach requires training a model by learning from an annotated
+dataset. We had an expert in business process modeling manually label process-related sentences as ‘‘P’’ for process-related and ‘‘NP’’ for not process-related.In total, 96 out of the 337 sentences in the purchasing policy and 31 sentencesamong the 202 sentences from the travel policy were tagged as ‘‘P.’’ Furthermore,the expert also annotated the key process components in the sentences. Speciﬁcally,our study only focuses on three components: tasks \T[, data items \D[, and
+resources \R[. In total, 502 process components (i.e., 105 tasks, 191 data items,
+and 206 resources) were identiﬁed from the purchasing policy, and 530 processcomponents (i.e., 75 tasks, 275 data items, and 180 resources) were identiﬁed fromthe travel policy. We then converted the labels into the BIO scheme with formatB(I)–T(D/R). For example, B–D indicates the beginning of a data item, and I–Trepresents the continuation of a task.
+4.2 Evaluation metrics
+We use standard machine learning evaluation metrics, accuracy, precision, recall,
+and F-measure, to evaluate the performances of process mining. These metrics havebeen widely used in information retrieval and information extraction studies.Accuracy measures the overall correctness. Precision, recall, and F-measureevaluate the correctness for each class. Speciﬁcally, precision indicates thecorrectness of identiﬁed relations and recall indicates the completeness of identiﬁedrelations. F-measure is the harmonic mean of precision and recall. Accuracy,
+precision, recall, and F-measure are formally deﬁned as follows:182 J. Li et al.
+123accuracy ¼# of correctly identified instances
+total # of instances
+precision( iÞ¼# of correctly identified instances for class i
+total # of instances identified as class i
+recall( iÞ¼# of correctly identified instances for class i
+total # of instances in class i
+F-measure( iÞ¼2/C2precision ðiÞ/C2recall ðiÞ
+precision( iÞþrecall( iÞ
+4.3 Experiments for process policy selection
+To evaluate the performance of process policy selection, we applied the bag-of-
+words and tree kernel methods on the two policy datasets, respectively. A popular
+parsing tool, chunklink, was used to construct parse trees for sentences from the twopolicies. Some sentences cannot be parsed by chunklink often because they are longlists of items, e.g., regulations in the travel policy. Based on our investigation, thesesentences are not related to business processes and therefore are removed from thetraining set at this step. Consequently, there are 336 sentences left in the purchasingpolicy with 96 tagged as ‘‘P’’ and 240 as ‘‘NP,’’ and there are 158 sentences left inthe travel policy with 31 as ‘‘P’’ and 127 as ‘‘NP.’’ In the tree kernel computation,
+POS is used in the matching function, while only word is used in the similarity
+function and the attribute weight x
+1=1. The decay factors kwas set to 0.5. For
+both methods, we used a support vector machine (SVM) for learning theclassiﬁcation model due to its excellent performance reported in many applications.In particular, we chose an SVM package, LibSVM, for kernel learning(http://www.csie.ntu.edu.tw/ *cjlin/libsvm ), because (1) it has been frequently
+used in previous studies, (2) it accepts customized kernels, and (3) it performsparameter selection for better performance.
+For each dataset, we performed a tenfold cross-validation to estimate the
+performances of process mining. Speciﬁcally, in every round, we used ninefold astraining data to learn a classiﬁcation model and predicted the class label ofsentences in the other testing fold. The ﬁnal performance is averaged over all tenrounds. Table 1summarizes the performances of the process mining methods for
+these two datasets. We only report the precision, recall, and F-measure values forthe positive class (i.e., process-related).
+In general, our preliminary results are encouraging. Compared with the naı ¨ve
+prediction as a baseline (71.43% for the purchasing policy and 80.38% for the travel
+Table 1 Results of process policy selection experiments
+Policy Methods Accuracy (%) Precision (%) Recall (%) F-measure (%)
+Purchasing Bag-of-words 77.33 62.75 40.00 46.48
+Tree kernel 78.71 68.67 36.25 45.34
+Travel Bag-of-words 87.69 50.00 45.00 45.33
+Tree kernel 89.23 50.00 30.00 36.67A policy-based process mining framework 183
+123policy), both methods did achieve higher performance. However, there is still a lot
+of space for improvement of precision, recall, and F-measure. Speciﬁcally, on thepurchasing policy corpus, the tree kernel method achieved higher overall accuracy
+(78.71%) and precision (68.67%) than the bag-of-words method, whereas bag-of-
+words had higher recall (40.00%) and F-measure (46.5%). The situation on thetravel policy corpus is similar. Although both classiﬁers are conservative inassigning positive labels, the tree kernel tends to predict more sentences as negative(i.e., non-process). In distinguishing process-related sentences from others in policydocuments, the sentence structural information captured by the tree kernel does notseem to be more powerful than the lexical patterns captured by bag of words.
+4.4 Experiments for process component identiﬁcation
+To examine the process component identiﬁcation method, we extracted two widely
+used features in text mining in this pilot study: bag-of-words and POS tags. Apopular POS tagging tool, StanfordPOSTagger ( http://nlp.stanford.edu/software/
+tagger.shtml ), was used to automatically tag sentences in the test-bed. To train a
+sequence labeling model, we used an open-source toolkit, called CRF ??
+(http://crfpp.sourceforge.net/ ). This toolkit is design for variety of NLP tasks,
+including information extraction, named entity recognition, and text chunking. For
+both bag-of-words and POS tags, unigram, bigram, and trigram features can bedeﬁned and used for model training. For each of the two test-beds, we performedCRFs using two different set of features: (1) word features only, and (2) both wordand POS features. Like in Step 1, tenfold cross validation was used to estimate theperformances.
+Table 2summarizes the performances of process component identiﬁcation for
+our test-bed. We report the precision, recall, and F-measure values for the three
+process components: T, D, and R. Values in bold font are the best performances
+achieved by the two methods. Given the challenge that the process components aremostly general terms, the experimental results we achieved from such a smalltraining corpus were encouraging. For the purchasing policy, by using word featuresalone, the CRF model achieved 91.26% accuracy, 76.47% precision, 19.70% recall,and 31.33% F-measure. When POS features were added, the accuracy, recall, andF-measure were increased to 91.73, 26.52, and 38.67%, whereas precision wasdecreased to 71.43%. Similarly, for the travel policy, by using word features alone,
+the CRF model achieved 86.76% accuracy, 83.42% precision, 30.38% recall, and
+44.54% F-measure. When POS features were added, the accuracy, recall, andF-measure were increased to 87.74, 38.49, and 51.26%, whereas precision wasdecreased to 76.69%. Trained on word features alone, the model tended to identifyphrases that match certain word or sequences patterns only. By contrast, POSfeatures can capture syntactic characteristics of words’ context beyond the lexicallevel. The results showed that, with the POS features added, the model learned moreenriched patterns and was less conservative in identifying process components.
+Although it increased the number of false positives, it reduced more false negatives,
+as indicated by the improved F-measure. We also observed that the performance forthe travel policy was better than the purchasing policy. We attribute this to the184 J. Li et al.
+123smaller number of process components (D, R, and T) in the purchasing policy. In
+other words, given fewer positive examples in the training set, the CRFs becomemore conservative to label words as process components.
+5 Research issues in policy-based process mining
+Although the experiments presented in Sect. 4demonstrate the feasibility of policy-
+based process mining, much more research efforts are needed to further develop andvalidate this approach. In this section, we discuss some research issues to beaddressed for PBPM as follows.
+•Process component relationship extraction, i.e., Step 3 of PBPM. After
+extracting the process components, e.g., tasks, data items, and resources,identifying the correct relationships among process components is a verychallenging task. For example, for the policy statement ‘‘the traveler mustsubmit a request for reimbursement to the department within 30 days uponcompleting the travel’’, two resources ‘‘traveler’’ and ‘‘department’’, one data
+item ‘‘request for reimbursement’’, and one task ‘‘submit’’ can be identiﬁed. The
+correct relationship among the components should be ‘‘traveler’’ ‘‘submit(s)’’‘‘request for reimbursement’’, while ‘‘department’’ ‘‘submit(s)’’ ‘‘request forreimbursement’’ is apparently a wrong relationship in this context. Therefore, inorder to correctly construct process models, the contextual information andrelationships among different process components must be studied. Relationaldata hidden in other types of text, such as news articles or biomedic al literature,Table 2 Results of process component identiﬁcation experiments
+Policy Features Accuracy (%) Class Found Precision (%) Recall (%) F-measure (%)
+Purchasing Word 91.26 136 76.47 19.70 31.33
+T 20 75.00 14.29 24.00D 38 75.64 14.08 23.90R 78 78.95 28.10 40.97
+Word ?POS 91.73 196 71.43 26.52 38.67
+T 32 65.63 20.00 30.66
+D 54 74.07 18.78 29.96R 110 71.82 37.62 49.38
+Travel Word 86.76 193 83.42 30.38 44.54
+T 28 82.14 30.67 44.66D 87 82.76 26.18 39.78R 78 84.62 36.67 51.16
+Word ?POS 87.74 266 76.69 38.49 51.26
+T 33 78.79 34.46 48.15D 136 73.53 36.36 48.66R 97 80.41 43.33 56.32A policy-based process mining framework 185
+123are often binary in nature, in the sense that they typically involve a pair of
+entities. For component relationship identiﬁcation in the context of processmining, the relations can be binary, ternary, or even n-nary. We also need toconsider the relationships among process components identiﬁed from differentsentences, which is largely an open question in the information extraction ﬁeld.Furthermore, since each sentence may contain multiple resources, data items,and tasks that can derive exponential number of intra- or inter-sentencerelational combinations, how to identify valid and meaningful relationships
+imposes a great computational challenge. We are in the process of applying
+kernel-based relation extraction techniques to tackle this problem.
+•Process model construction, i.e., Step 4 of PBPM. Even after the process
+components and their relationships are identiﬁed, constructing process models isstill not an easy task for the following reasons. First, given the huge number ofprocess components and their relationships, process construction algorithmsmust be developed to help link process components within and across sentencesto facilitate process construction. Second, real world business policies are often
+incomplete in the sense that they do not deﬁne every aspects of a process model,
+resulting in gaps in the extracted process models. Filling those gaps requiresadditional data collections. Third, the constructed process models may containsyntactical and semantic errors. Identifying and removing those errors is acritical step. Visualization techniques can be applied to help address thosechallenges. We are developing a process model visualization tool based onopen-source Java Universal Network/Graph Framework ( http://jung.
+sourceforge.net/ ), which will provide a set of useful features based on graph
+theory such as highlighting dangling tasks, incomplete decision nodes, mostly
+used data items, etc.
+•Further validation of PBPM. There are a number of ways to further validate the
+PBPM approach. First, due to the high cost of manual annotation, our currentexperiments only used two policy corpora with about 500 sentences in total.Given the complexity of our task, it is ideal to collect and annotate additionaldata for model training and evaluation purposes. Second, in order to validate theportability of our approach, we plan to collect data from additional business
+domains besides the higher education domain used in this paper and compare the
+experimental results derived from different business domains. Third, userstudies should be conducted to compare PBPM with existing process mappingapproaches. The empirical results may provide insights into further PBPMimprovements.
+•Semantic analysis for PBPM. A framework of PBPM involves computational
+understanding of relatively deep semantics in human language, which is a verychallenging task. In this paper, we used different statistical learning methods to
+discover process-related information from texts mainly based on their syntactic
+patterns without looking into the deep policy semantics. In order to furtherimprove our approach and achieve better performance, we need to incorporatemore semantic features of process policies by leveraging research from otherdomains such as semantic web, ontology, and process reference models. Alongthis line, our research in text-based process discovery could spur new advances186 J. Li et al.
+123in related disciplines such as natural language processing, machine learning, and
+process mining.
+6 Conclusions
+In this paper, we proposed a new process mining framework named policy-based
+process mining (PBPM) for the automatic discovery of process models based onbusiness policies. PBPM is different from existing process mining approachesbecause it leverages unstructured business policies rather than structured loggingdata for process discovery. It is also different from existing process mappingmethods as it incorporates text mining techniques to reduce the cognitive load of
+process analysts. PBPM advocates an innovative way of discovering process
+knowledge from business policies that widely exist in business organizations.
+In order to demonstrate the feasibility of our approach, several experiments were
+conducted based on two sets of real world business policies. In particular, bag-of-words, tree kernel, and conditional random ﬁeld techniques were used to extractprocess information from policy texts. The experiments produced very promisingresults in terms of precision; however, the recall still needs signiﬁcant improvement.This is because of the small training set and the low portion of positive examples in
+our corpus. Besides, the currently adopted algorithms mainly make use of syntactic
+patterns but capture little semantics in sentences. Policy-based process mining is avery new research topic between business process management and text mining,which demands more research efforts to be fully validated and produce practicalsolutions. We identiﬁed several important research issues to be addressed. Ifsuccessful, PBPM could have great impacts on industry practice by changing howbusiness process models are managed and academic research by extending textmining to business process management.
+References
+Aldowaisan TA, Gaafar LK (1999) Business process reengineering: an approach for process mapping.
+Omega 27(5):515–524
+Basu A, Blanning RW (2000) A formal approach to workﬂow analysis. Inf Syst Res 11(1):17–36Basu A, Kumar A (2002) Research commentary: workﬂow management issues in e-Business. Inf Syst
+Res 13(1):1–14
+Bunescu R, Mooney R (2005) A shortest path dependency kernel for relation extraction. In: Proceedings
+of conference on human language technology and empirical methods in natural language processing(HLT/EMNLP), Morristown, NJ, pp 724–731
+Cobb CG (2004) Enterprise process mapping: integrating systems for compliance and business
+excellence. ASQ Quality Press, Milwaukee, p 128
+Collins M, Duffy N (2002) Convolution kernels for natural language. In: Proceedings of advances in
+neural information processing systems 14, MIT
+Cristianini N, Shawe-Taylor J (2000) An introduction to support vector machines and other kernel-based
+learning methods. Cambridge University Press, New YorkA policy-based process mining framework 187
+123Culotta A, Sorensen J (2004) Dependency tree kernels for relation extraction. In: Proceedings of 42nd annual
+meeting of the association for computational linguistics (ACL-04), Barcelona, Spain, pp 423–429
+Datta A (1998) Automating the discovery of AS-IS business process models: probabilistic and
+algorithmic approaches. Inf Syst Res 9(3):275–301
+Grigori D, Casati F, Castellanos M, Dayal U, Sayal M, Shan M-C (2004) Business process intelligence.
+Comput Ind 53:321–343
+Hofacker I, Vetschera R (2001) Algorithmical approaches to business process design. Comput Oper Res
+28(13):1253–1275
+Hunt VD (1996) Process mapping: how to reengineer your business processes. Wiley, New York, p 288Kettinger WJ, Teng JTC, Guha S (1997) Business process change: a study of methodologies, techniques,
+and tools. MIS Q 21(1):55–80
+Lafferty J, McCallum A, Pereira F (2001) Conditional random ﬁelds: probabilistic models for segmenting
+and labeling sequence data. In: Proceedings of the 18th international conference on machinelearning, San Francisco, CA, pp 282–289
+Lodhi H, Saunders C, Shawe-Taylor J, Cristianini N, Watkins C (2002) Text classiﬁcation using string
+kernels. J Mach Learn Res 2(3):419–444
+Madison D (2005) Process mapping, process improvement and process management. Paton Press, Chico, p 320Marsh E, Perzanowski D (1998) Muc-7 evaluation of I.E technology: overview of results. In: Proceedings
+of the seventh message understanding conference (MUC-7)
+McCallum A, Freitag D, Pereira F (2000) Maximum entropy Markov models for information extraction
+and segmentation. In: Proceedings of the 17th international conference on machine learning, San
+Francisco, CA, pp 591–598
+OMG (2005) UML superstructure speciﬁcation, v2.0. http://www.omg.org/cgi-bin/doc?formal/05-07-04
+Peltier TR (2004) Information security policies and procedures: a practitioner’s reference, 2nd edn.
+Auerbach Publication, Boca Raton
+Rabiner L (1989) A tutorial on hidden Markov models and selected applications in speech recognition.
+Proc IEEE 77(2):257–285
+Reijers HA, Limam S, van der Aalst WMP (2003) Product-based workﬂow design. J Manag Inf Syst
+20(1):229–262
+Scheer A-W (2000) ARIS—business process modeling, 3rd edn. Springer, New YorkSha F, Pereira F (2003) Shallow parsing with conditional random ﬁelds. In: Proceedings of the 2003
+conference of the North American chapter of the association for computational linguistics on humanlanguage technology, pp 134–141
+van der Aalst WMP (2000) Reengineering knock-out processes. Decis Support Syst 30(4):451–468van der Aalst WMP, Weijters A (2004) Process mining: a research agenda. Comput Ind 53(3):231–244van der Aalst WMP, Reijers HA, Weijters A, van Dongen BF, de Medeiros AKA, Song M, Verbeek
+HMW (2007) Business process mining: an industrial application. Inf Syst 32(1):713–732
+Voorhees E (2001) SAIC information extraction. http://www-nlpir.nist.gov/related_projects/muc/
+Wang HJ, Zhao JL (2005) Policy-driven business process modeling in e-business. In: Proceedings of the
+fourth workshop on E-business (WeB 2005), Las Vegas, Nevada
+Wang HJ, Zhao JL, Zhang L-J (2006) Policy-driven process mapping (PDPM): towards process design
+automation. In: Proceedings of the 2006 international conference on information systems (ICIS2006), Milwaukee, Wisconsin
+Zelenko D, Aone C, Richardella A (2003) Kernel methods for relation extraction. J Mach Learn Res
+3(6):1083–1106188 J. Li et al.
+123
