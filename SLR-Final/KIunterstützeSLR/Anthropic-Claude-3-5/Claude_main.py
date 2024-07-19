@@ -6,7 +6,7 @@ from PyPDF2 import PdfReader
 import time
 
 # Konfiguration
-API_KEY = "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"
+API_KEY = "YOUR ANTHROPIC API KEY"
 INPUT_FOLDER = '../Verfügbare_PDFs'
 OUTPUT_FOLDER = '../Konvertierbare_Texte'
 OUTPUT_CSV = './ClaudeOutput.csv'
