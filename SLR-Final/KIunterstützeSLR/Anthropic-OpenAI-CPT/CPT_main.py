@@ -7,8 +7,8 @@ from PyPDF2 import PdfReader
 import time
 
 # Konfiguration
-CLAUDE_API_KEY = "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"
-GPT_API_KEY = "sk-proj-XEEGpki4ogRIRwB1dgIRT3BlbkFJydH5gsW9D9yvFPQxZqS8"
+CLAUDE_API_KEY = "YOUR ANTHROPIC API KEY"
+GPT_API_KEY = "YOUR OPENAI API KEY"
 INPUT_FOLDER = '../Verfügbare_PDFs'
 OUTPUT_FOLDER = '../Konvertierbare_Texte'
 OUTPUT_CSV = './CPToutput.csv'
