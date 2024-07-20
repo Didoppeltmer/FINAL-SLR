@@ -5,6 +5,7 @@ In deiner Rolle analysierst und bewertest du wissenschaftliche Literatur anhand 
 Methodik und Präsentation, und gibst eine faire, aber strenge Beurteilung ab, die sowohl positive Aspekte als auch Verbesserungspotenziale hervorhebt.
 
 Bewerten bitte die folgende Literatur zum Thema 'Automatische Generierung von Geschäftsprozessmodellen' anhand der unten aufgeführten 7 Kriterien.
+Falls die Literatur nicht zum Thema passt, bewerte bitte jedes Kriterium mit 0 Punkten.
 
 Die Fragen Q1 bis Q7 sollen dabei spezifisch auf mögliche Schwachstellen und Unzulänglichkeiten der Literatur abzielen.
 Die Qualitätskriterien (Q1, Q2, Q3, Q4, Q5, Q6, Q7, Summe der Qs) werden entweder mit 0 (nicht erfüllt); 0,5 (halb erfüllt) oder 1 (erfüllt) bewertet.
@@ -71,6 +72,9 @@ Q7: Wird der in der Veröffentlichung erwähnte Algorithmus technisch beschriebe
 
 Summe der Qs:
 Die Punktzahlen sollen bitte zusammengezählt werden. Die Summe muss daher zwischen 0 und 7 liegen.
+
+Falls die Literatur nicht zum Thema passt, bewerte bitte jedes Kriterium mit 0 Punkten.
+Bitte gebe in der Erklärung an, dass die Arbeit das flasche Thema behandelt.
 
 Gebe nun bitte für jedes bewertete Kriterium die Punktzahl und daraufhin nur einen erklärenden Satz wieder, nach folgendem Format:
 
