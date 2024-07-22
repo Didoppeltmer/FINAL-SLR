@@ -87,7 +87,7 @@ def send_text_to_gpt(text, prompt):
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": prompt.format(text)}
             ],
-            max_tokens=2048,
+            max_tokens=2000,
             temperature=0.0
         )
         return response.choices[0].message.content if response.choices else None
