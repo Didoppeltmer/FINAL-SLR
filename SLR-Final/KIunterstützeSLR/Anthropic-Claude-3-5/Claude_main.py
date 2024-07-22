@@ -105,7 +105,7 @@ def validate_claude_response(initial_response, original_text):
             messages=[
                 {"role": "user", "content": f"""Here is a scientific article: {original_text}
                     Here is a preliminary evaluation that you should critically evaluate again 
-                    and output in the specified format : {initial_response}"""}
+                    and output in the specified format: {initial_response}"""}
             ]
         )
 
