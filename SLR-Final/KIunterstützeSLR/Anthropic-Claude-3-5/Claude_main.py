@@ -79,7 +79,7 @@ def send_text_to_claude(text, prompt):
     try:
         response = client.messages.create(
             system=system_prompt,
-            max_tokens=1000,
+            max_tokens=2000,
             model="claude-3-5-sonnet-20240620",
             temperature=0.0,
             messages=[
