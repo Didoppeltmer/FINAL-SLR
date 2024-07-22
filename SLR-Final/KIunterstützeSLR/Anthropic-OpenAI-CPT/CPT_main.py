@@ -17,7 +17,7 @@ PROCESSED_FOLDER = '../Verarbeitete_Texte'
 USED_PDFS = '../Konvertierte_PDFs'
 SYSTEM_PROMPT_PATH = '../system_prompt.txt'
 VALIDATION_PROMPT = "../validation_prompt.txt"
-MAIN_PROMPT = 'Hier ist ein Wissenschaftlicher Artikel, bitte halte dich genau an das Ausgabeformat: <paper>{}</paper>'
+MAIN_PROMPT = 'Here is a scientific article, please follow the output format exactly: <paper>{}</paper>'
 
 
 # Initialisierung des OpenAI Clients
@@ -107,9 +107,9 @@ def validate_claude_response(initial_response, original_text):
             model="claude-3-5-sonnet-20240620",
             temperature=0.0,
             messages=[
-                {"role": "user", "content": f"""Hier ist ein Wissenschaftlicher Artikel: {original_text}
-                    Hier ist eine vorläufige Bewertung die nochmal kritisch bewertet und in dem angegebenen Format 
-                    ausgegeben werden soll: {initial_response}"""}
+                {"role": "user", "content": f"""Here is a scientific article: {original_text}
+                    Here is a preliminary evaluation that you should critically evaluate again 
+                    and output in the specified format: {initial_response}"""}
             ]
         )
 
