@@ -20,7 +20,7 @@ VALIDATION_PROMPT = "../validation_prompt.txt"
 MAIN_PROMPT = 'Here is a scientific article, please follow the output format exactly: <paper>{}</paper>'
 
 
-# Initialisierung des OpenAI Clients
+# Initialisierung des Anthropic und OpenAI Clients
 claudeclient = Anthropic(api_key=CLAUDE_API_KEY)
 gptclient = OpenAI(api_key=GPT_API_KEY)
 
