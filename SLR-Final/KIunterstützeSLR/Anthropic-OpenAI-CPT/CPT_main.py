@@ -96,7 +96,7 @@ def send_text_to_gpt(text, prompt):
         return None
 
 def validate_claude_response(initial_response, original_text):
-    """Validiert die erste Antwort von Claude mit einer zweiten KI-Anfrage"""
+    """Validiert die erste Antwort von GPT mit einer zweiten KI-Anfrage von Claude"""
     validation_prompt = read_validation_prompt()
     if not validation_prompt:
         return None
